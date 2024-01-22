@@ -19,7 +19,7 @@ public class GameInitialisation : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse1)) 
+        if (Input.GetKey(KeyCode.Mouse0)) 
         {
             canvasUI.SetActive(true);
             keybinds.SetActive(false);
