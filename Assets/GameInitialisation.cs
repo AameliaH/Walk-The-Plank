@@ -15,6 +15,7 @@ public class GameInitialisation : MonoBehaviour
     private void Start()
     {
         canvasUI.SetActive(false);
+        keybinds.SetActive(true);
     }
 
     void Update()
