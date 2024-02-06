@@ -32,8 +32,6 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-
-
     public void GoHomeButton()
     {
         if (mainScreenPanel != null)

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyScr : MonoBehaviour
 {
-    public int health;
+    public int health = 5;
     public float speed;
 
     // Start is called before the first frame update
