@@ -242,7 +242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -67.9, y: -188.2}
+  m_AnchoredPosition: {x: -67.9, y: -186.3}
   m_SizeDelta: {x: 70, y: 63.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &346460076
@@ -1428,14 +1428,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2237040862c5adf4996d7ffb7a5ac059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Offset: 93
+  Move: 93
   StartBtwMove: 1
   timer: 1
   swordAtk: {fileID: 1914687997}
   atkTimer: 0
   enemyObj: {fileID: 1725410677}
   collideObj: {fileID: 2114736864}
-  collider1Scr: {fileID: 0}
+  collider1Scr: {fileID: 2114736868}
+  swordActive: 0
   damage: 0
   enemyID:
     serializedVersion: 2
@@ -1455,13 +1456,13 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369166651}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1597,6 +1598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1624955948}
   - component: {fileID: 1624955947}
+  - component: {fileID: 1624955949}
   m_Layer: 0
   m_Name: sword
   m_TagString: Untagged
@@ -1664,13 +1666,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624955946}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.81, y: 0.42, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.71, y: 0.5, z: 0}
   m_LocalScale: {x: 4.94, y: 7.84, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1624955949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624955946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b595e8db1232dab41b29ebcb586d2b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sword: {fileID: 1624955946}
+  meep: {fileID: 1369166651}
 --- !u!1 &1725410677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,7 +2012,7 @@ Canvas:
   m_GameObject: {fileID: 1846782656}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2045,7 +2061,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -149.7, y: -188.9}
+  m_AnchoredPosition: {x: -149.7, y: -186.67}
   m_SizeDelta: {x: 65.2, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1914687997
@@ -2093,8 +2109,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1369166654}
-        m_TargetAssemblyTypeName: Meep, Assembly-CSharp
-        m_MethodName: attackTime
+        m_TargetAssemblyTypeName: MeepScr, Assembly-CSharp
+        m_MethodName: swordatk
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2379,6 +2395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meep: {fileID: 1369166651}
+  Collider1: {fileID: 2114736865}
+  inRange: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

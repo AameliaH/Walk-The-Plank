@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public string GameScene; //name of the scene is input
     public GameObject mainScreenPanel;
     public GameObject questPanel; //different panels but same scene
     public GameObject gameScene;
