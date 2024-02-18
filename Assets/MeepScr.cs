@@ -7,32 +7,31 @@ using UnityEngine.UI;
 
 public class MeepScr : MonoBehaviour
 {
-    public float Move = 93f;  //how far for the sprite to move
-    private float timeBtwMove = 0;   // a timer that starts every time a move is made 
-    public float StartBtwMove = 1;  //how long the timer is
-    public bool timer = true;  //just checks whether the countdown is complete
-    public Button swordAtk;  //links to attacks which are in button form
+    private float Move = 93f;  //how far for the sprite to move
+    public float timeBtwMove = 0;   // a timer that starts every time a move is made 
+
+
     public int atkTimer = 0;
+
     public GameObject enemyObj;
     public GameObject collideObj;
-    public Vector2 swordPos;
+    public GameObject swordObj;
+
     private EnemyScr enemyScr;
     public Collider1Scr collider1Scr;  
-    public bool swordActive = false;
-    private Vector2 meepPos;
-    
-    public int damage;
-    [SerializeField] LayerMask enemyID;  //serialize field is private but can see in investigator
-    [SerializeField] Vector2 positionOfBox;
-    [SerializeField] Vector2 sizeOfBox;
-    public bool collide = false;
+    public SwordScr swordScr;
+
+    public Vector2 swordPos;
+
     public bool left = true;
     public bool right = true;
     public bool stopL = false;
     public bool stopR = false;
+    public bool swordActive = true;
 
     private void Awake()
     {
+        swordScr = swordObj.GetComponent<SwordScr>();
         collider1Scr = collideObj.GetComponent<Collider1Scr>(); //gets the script from object
         enemyScr = enemyObj.GetComponent<EnemyScr>();
         transform.position = new Vector2(0, 0.75f); //sets position of user
@@ -40,22 +39,18 @@ public class MeepScr : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Health is " + enemyScr.health);
+        Debug.Log("Health is " + enemyScr.Enhealth);
     }
 
     void Update()
     {
-        if ((timeBtwMove <= 0) && (stopR == false)) //if timer is done + no stop flag
+        if ((timeBtwMove == 0) && (stopR == false)) //if timer is done + no stop flag
         {
             movingCharR();  //calls function
         }
-        if ((timeBtwMove <= 0) && (stopL == false))
+        if ((timeBtwMove == 0) && (stopL == false))
         {
             movingCharL();
-        }
-        else
-        {
-            timeBtwMove -= Time.deltaTime;   //timer goes down
         }
     }
 
@@ -75,43 +70,57 @@ public class MeepScr : MonoBehaviour
 
     void movingCharR()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if ((Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.RightArrow)))
         {
             transform.position = new Vector2(transform.position.x + Move * Time.fixedDeltaTime, transform.position.y); //changes position
-            timeBtwMove = StartBtwMove;  //starts timer
-            timer = false; //restarts the timer
+            timeBtwMove = 1;  //starts timer
             left = false; //what direction they are turning
             right = true;
             stopL = false; //if move away - turn off stop flag
+            StartCoroutine(EnemyTurn());
         }
     }
     void movingCharL()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if ((Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.LeftArrow)))
         {
             transform.position = new Vector2(transform.position.x - Move * Time.fixedDeltaTime, transform.position.y);
-            timeBtwMove = StartBtwMove;
-            timer = false;
+            timeBtwMove = 1;
             left = true;
             right = false;
             stopR = false;
+            StartCoroutine(EnemyTurn());
 
         }
     }
 
     public void swordatk()
     {
-        
-
-
         Debug.Log("function called");
-        if ((collider1Scr.inRange == true) && (atkTimer == 0))  //if the user clicks sword button
+        if ((collider1Scr.inRange == true) && (timeBtwMove == 0) && (swordActive==true))  //if the user clicks sword button
         {  //from 0 to how many enemies there are
-             enemyScr.takeDmg(1); //passes one into function
-             Debug.Log("Health is " + enemyScr.health);
-             timer = false;
-
-            
+            swordScr.swordA();
+            Debug.Log(swordPos);
+            enemyScr.takeDmg(1); //passes one into function
+            Debug.Log("Health is " + enemyScr.Enhealth);
+            StartCoroutine(EnemyTurn());
+            timeBtwMove = 1;
         }
+    }
+
+    IEnumerator EnemyTurn()
+    {
+        yield return new WaitForSeconds(2);
+        if (collider1Scr.inRange == true)
+        {
+            enemyScr.EnemyAtk();
+            Debug.Log(enemyScr.lastMove);
+        }
+        else
+        {
+            enemyScr.EnemyMove();
+            Debug.Log(enemyScr.lastMove);
+        }
+
     }
 }

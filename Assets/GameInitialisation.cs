@@ -30,7 +30,5 @@ public class GameInitialisation : MonoBehaviour
     public void MainMenuButton()
     {
         SceneManager.LoadScene(MainMenuScene);
-    }
-
-    
+    } 
 }
