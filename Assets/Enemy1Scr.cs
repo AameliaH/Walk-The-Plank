@@ -5,38 +5,34 @@ using UnityEngine.UIElements;
 
 public class Enemy1Scr : EnemyScr
 {
-    private float Move = 93f;  //how far for the sprite to move
-    private float attackDis = 40f;
-    private int health = 5;
+#pragma warning disable IDE0044
+    private float MoveNum = 93f;  //how far for the sprite to move
+
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
         transform.position = new Vector2(-3.73f,0.6f);
     }
 
-    public void movingEnemyR()
+    public void MovingEnemyR()
     {
-        transform.position = new Vector2(transform.position.x + Move * Time.fixedDeltaTime, transform.position.y); //changes position
+        StartCoroutine(Wait());
+        Debug.Log(transform.position.x);
+        transform.position = new Vector2(transform.position.x + MoveNum * Time.fixedDeltaTime, transform.position.y); //changes position
+        Debug.Log(transform.position.x);
+        Debug.Log("Right");
+    }
+    public void MovingEnemyL()
+    {
 
-    }
-    public void movingEnemyL()
-    {
-        transform.position = new Vector2(transform.position.x - Move * Time.fixedDeltaTime, transform.position.y);
-       
+        StartCoroutine(Wait());
+        Debug.Log(transform.position.x);
+        transform.position = new Vector3(transform.position.x - MoveNum * Time.fixedDeltaTime, transform.position.y);
+        Debug.Log(transform.position.x);
+        Debug.Log("Left");
     }
 
-    public void EnemyAtk()
-    {
-        base.EnemyAtk();
-        if (meepScr.transform.position.x > transform.position.x)
-        {
-            StartCoroutine(Wait());
-            transform.position = new Vector2(transform.position.x + attackDis * Time.fixedDeltaTime, transform.position.y);
-            StartCoroutine(Wait());
-            transform.position = new Vector2(transform.position.x - attackDis * Time.fixedDeltaTime, transform.position.y);
-        }
-    }
 
     IEnumerator Wait()
     {

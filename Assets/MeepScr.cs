@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MeepScr : MonoBehaviour
 {
+    #pragma warning disable IDE0044
     private float Move = 93f;  //how far for the sprite to move
     public float timeBtwMove = 0;   // a timer that starts every time a move is made 
 
@@ -16,10 +17,12 @@ public class MeepScr : MonoBehaviour
     public GameObject enemyObj;
     public GameObject collideObj;
     public GameObject swordObj;
+    public GameObject enemy1Obj;
 
     private EnemyScr enemyScr;
     public Collider1Scr collider1Scr;  
     public SwordScr swordScr;
+    public Enemy1Scr enemy1Scr;
 
     public Vector2 swordPos;
 
@@ -27,13 +30,15 @@ public class MeepScr : MonoBehaviour
     public bool right = true;
     public bool stopL = false;
     public bool stopR = false;
-    public bool swordActive = true;
+    public bool swordActive = false;
+    public bool EnemyMovement;
 
     private void Awake()
     {
         swordScr = swordObj.GetComponent<SwordScr>();
         collider1Scr = collideObj.GetComponent<Collider1Scr>(); //gets the script from object
         enemyScr = enemyObj.GetComponent<EnemyScr>();
+        enemy1Scr = enemy1Obj.GetComponent<Enemy1Scr>();
         transform.position = new Vector2(0, 0.75f); //sets position of user
     }
 
@@ -46,12 +51,13 @@ public class MeepScr : MonoBehaviour
     {
         if ((timeBtwMove == 0) && (stopR == false)) //if timer is done + no stop flag
         {
-            movingCharR();  //calls function
+            MovingCharR();  //calls function
         }
         if ((timeBtwMove == 0) && (stopL == false))
         {
-            movingCharL();
+            MovingCharL();
         }
+  
     }
 
     private void OnTriggerEnter2D(Collider2D collision) //if there is a collision
@@ -66,9 +72,29 @@ public class MeepScr : MonoBehaviour
             {
                 stopR = true;
             }
+        CheckEnemyLocation();
     }
 
-    void movingCharR()
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        stopL = false;
+        stopR = false;
+    }
+
+    public void CheckEnemyLocation()
+    {
+        if ((transform.position.x > enemy1Scr.transform.position.x) && (stopR = true))
+        {
+            stopR = false;
+        }
+
+        if ((transform.position.x < enemy1Scr.transform.position.x) && (stopL = true))
+        {
+            stopL = false;
+        }
+    }
+
+    void MovingCharR()
     {
         if ((Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.RightArrow)))
         {
@@ -80,7 +106,7 @@ public class MeepScr : MonoBehaviour
             StartCoroutine(EnemyTurn());
         }
     }
-    void movingCharL()
+    void MovingCharL()
     {
         if ((Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.LeftArrow)))
         {
@@ -97,21 +123,30 @@ public class MeepScr : MonoBehaviour
     public void swordatk()
     {
         Debug.Log("function called");
-        if ((collider1Scr.inRange == true) && (timeBtwMove == 0) && (swordActive==true))  //if the user clicks sword button
+        if ((collider1Scr.inRange == true) && (timeBtwMove == 0))  //if the user clicks sword button
         {  //from 0 to how many enemies there are
-            swordScr.swordA();
+            Debug.Log("THING");
+            swordScr.sword.SetActive(true);
+            swordScr.SwordAtk();
             Debug.Log(swordPos);
             enemyScr.takeDmg(1); //passes one into function
             Debug.Log("Health is " + enemyScr.Enhealth);
             StartCoroutine(EnemyTurn());
             timeBtwMove = 1;
+            swordActive = true;
         }
     }
 
     IEnumerator EnemyTurn()
     {
         yield return new WaitForSeconds(2);
-        if (collider1Scr.inRange == true)
+        if ((collider1Scr.inRange == true) && (swordActive==true))
+        {
+            enemyScr.Dodge();
+            Debug.Log(enemyScr.lastMove);
+            swordActive = false;
+        }
+        else if (collider1Scr.inRange == true)
         {
             enemyScr.EnemyAtk();
             Debug.Log(enemyScr.lastMove);

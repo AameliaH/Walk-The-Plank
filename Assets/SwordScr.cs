@@ -7,7 +7,6 @@ public class SwordScr : MonoBehaviour
     public GameObject sword;
     public GameObject meep;
     private MeepScr meepScr;
-    private float speed = 0.25f;
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +15,18 @@ public class SwordScr : MonoBehaviour
         meepScr = meep.GetComponent<MeepScr>();
     }
 
-    public void swordA()
+    public void SwordAtk()
     {
-        transform.position = meepScr.transform.position;
-        transform.position = new Vector2(transform.position.x - 0.71f, transform.position.y);
+        Debug.Log("A");
         sword.SetActive(true);
+        Debug.Log("B");
+        transform.position = new Vector2(meepScr.transform.position.x - 0.71f, meepScr.transform.position.y);
         Debug.Log("swordFunc");
-        StartCoroutine(MoveSword());
+        if (sword != null )
+        {
+            StartCoroutine(MoveSword());
+        }
+
     }
 
     IEnumerator MoveSword()

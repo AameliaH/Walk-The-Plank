@@ -32,25 +32,52 @@ public class EnemyScr : MonoBehaviour
     public void EnemyAtk()
     {
         meepScr.timeBtwMove = 0;
-        meepScr.swordActive = true;
         lastMove = "Attack";
+        meepScr.swordActive = false;
     }
 
     public void EnemyMove()
     {
+        Debug.Log("Move");
         if (meepScr.transform.position.x > enemy1Scr.transform.position.x)
         {
             StartCoroutine(Wait());
-            enemy1Scr.movingEnemyR();
+            enemy1Scr.MovingEnemyR();
+
+
         }
         else
         {
             StartCoroutine(Wait());
-            enemy1Scr.movingEnemyL();
+            enemy1Scr.MovingEnemyL();
+
         }
-        meepScr.timeBtwMove = 0;
         meepScr.swordActive = true;
+        meepScr.timeBtwMove = 0;
         lastMove = "Move";
+        meepScr.swordActive = false;
+    }
+
+    public void Dodge()
+    {
+        Debug.Log("Dodge");
+        if (meepScr.transform.position.x > enemy1Scr.transform.position.x)
+        {
+            StartCoroutine(Wait());
+            enemy1Scr.MovingEnemyL();
+            Debug.Log("Left");
+
+        }
+        else
+        {
+            StartCoroutine(Wait());
+            enemy1Scr.MovingEnemyL();
+            Debug.Log("Right");
+        }
+        meepScr.swordActive = true;
+        meepScr.timeBtwMove = 0;
+        lastMove = "Dodge";
+        meepScr.swordActive = false;
     }
 
     IEnumerator Win()
