@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -43,19 +44,17 @@ public class EnemyScr : MonoBehaviour
         {
             StartCoroutine(Wait());
             enemy1Scr.MovingEnemyR();
-
-
         }
         else
         {
             StartCoroutine(Wait());
             enemy1Scr.MovingEnemyL();
-
         }
         meepScr.swordActive = true;
         meepScr.timeBtwMove = 0;
         lastMove = "Move";
         meepScr.swordActive = false;
+        meepScr.MoveIT();
     }
 
     public void Dodge()
@@ -80,6 +79,12 @@ public class EnemyScr : MonoBehaviour
         meepScr.swordActive = false;
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        meepScr.stopL = true;
+        meepScr.stopR = true;
+
+    }
     IEnumerator Win()
     {
         yield return new WaitForSeconds(1);

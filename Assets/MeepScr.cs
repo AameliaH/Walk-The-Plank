@@ -103,7 +103,7 @@ public class MeepScr : MonoBehaviour
             left = false; //what direction they are turning
             right = true;
             stopL = false; //if move away - turn off stop flag
-            StartCoroutine(EnemyTurn());
+            StartCoroutine(EnemyTurn());  //leads to enemy action
         }
     }
     void MovingCharL()
@@ -139,23 +139,28 @@ public class MeepScr : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2); //waits 2 seconds
         if ((collider1Scr.inRange == true) && (swordActive==true))
         {
-            enemyScr.Dodge();
+            enemyScr.Dodge();   //if enemy has been attacked then it will move away
             Debug.Log(enemyScr.lastMove);
             swordActive = false;
         }
         else if (collider1Scr.inRange == true)
         {
-            enemyScr.EnemyAtk();
+            enemyScr.EnemyAtk();  //if in range enemy can attack user
             Debug.Log(enemyScr.lastMove);
         }
         else
         {
-            enemyScr.EnemyMove();
+            enemyScr.EnemyMove(); //else it will attempt to move towards the user
             Debug.Log(enemyScr.lastMove);
         }
 
+    }
+
+    public void MoveIT()
+    {
+        transform.position = new Vector2(transform.position.x + 1 * Time.fixedDeltaTime, transform.position.y); //changes position
     }
 }
