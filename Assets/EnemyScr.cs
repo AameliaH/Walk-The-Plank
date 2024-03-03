@@ -13,12 +13,22 @@ public class EnemyScr : MonoBehaviour
     public MeepScr meepScr;
     private bool death = false;
     public string lastMove = "Empty";
+    public int RandomNum;
+    public GameObject enemySword;
+    public Sword1Scr sword1Scr;
 
 
     public void Awake()
     {
         meepScr = Meep.GetComponent<MeepScr>();
         enemy1Scr = Enemy1.GetComponent<Enemy1Scr>();
+        sword1Scr = enemySword.GetComponent<Sword1Scr>();
+    }
+
+    public void Start()
+    {
+        RandomNum = Random.Range(0, 3);
+        Debug.Log("num generates");
     }
     public void takeDmg(int dmg)
     {
@@ -35,6 +45,9 @@ public class EnemyScr : MonoBehaviour
         meepScr.timeBtwMove = 0;
         lastMove = "Attack";
         meepScr.swordActive = false;
+        StartCoroutine(Wait());
+        sword1Scr.SwordAtk();
+        meepScr.dodge = true;
     }
 
     public void EnemyMove()
@@ -42,6 +55,7 @@ public class EnemyScr : MonoBehaviour
         Debug.Log("Move");
         if (meepScr.transform.position.x > enemy1Scr.transform.position.x)
         {
+
             StartCoroutine(Wait());
             enemy1Scr.MovingEnemyR();
         }
@@ -54,7 +68,7 @@ public class EnemyScr : MonoBehaviour
         meepScr.timeBtwMove = 0;
         lastMove = "Move";
         meepScr.swordActive = false;
-        meepScr.MoveIT();
+        StartCoroutine(Wait());
     }
 
     public void Dodge()
@@ -77,6 +91,7 @@ public class EnemyScr : MonoBehaviour
         meepScr.timeBtwMove = 0;
         lastMove = "Dodge";
         meepScr.swordActive = false;
+        StartCoroutine(Wait());
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

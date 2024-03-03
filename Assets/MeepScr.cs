@@ -32,6 +32,7 @@ public class MeepScr : MonoBehaviour
     public bool stopR = false;
     public bool swordActive = false;
     public bool EnemyMovement;
+    public bool dodge = false;
 
     private void Awake()
     {
@@ -140,11 +141,12 @@ public class MeepScr : MonoBehaviour
     IEnumerator EnemyTurn()
     {
         yield return new WaitForSeconds(2); //waits 2 seconds
-        if ((collider1Scr.inRange == true) && (swordActive==true))
+        if (((collider1Scr.inRange == true) && (swordActive==true)) || (dodge == true))
         {
             enemyScr.Dodge();   //if enemy has been attacked then it will move away
             Debug.Log(enemyScr.lastMove);
             swordActive = false;
+            dodge = false;
         }
         else if (collider1Scr.inRange == true)
         {

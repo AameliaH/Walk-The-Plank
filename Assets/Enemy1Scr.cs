@@ -12,6 +12,7 @@ public class Enemy1Scr : EnemyScr
     // Update is called once per frame
     void Start()
     {
+        base.Start();
         transform.position = new Vector2(-3.73f,0.6f);
     }
 
@@ -32,6 +33,7 @@ public class Enemy1Scr : EnemyScr
         Debug.Log(transform.position.x);
         Debug.Log("Left");
     }
+
 
 
     IEnumerator Wait()
