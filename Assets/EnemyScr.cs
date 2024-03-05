@@ -28,7 +28,7 @@ public class EnemyScr : MonoBehaviour
     public void Start()
     {
         RandomNum = Random.Range(0, 3);
-        Debug.Log("num generates");
+        Debug.Log("num generates" + RandomNum);
     }
     public void takeDmg(int dmg)
     {
@@ -42,33 +42,28 @@ public class EnemyScr : MonoBehaviour
 
     public void EnemyAtk()
     {
-        meepScr.timeBtwMove = 0;
+        meepScr.timeBtwMove = 0; //allows user to move 
         lastMove = "Attack";
         meepScr.swordActive = false;
-        StartCoroutine(Wait());
+        StartCoroutine(Wait()); 
         sword1Scr.SwordAtk();
-        meepScr.dodge = true;
+        meepScr.dodge = true; //will dodge in the next turn
     }
 
     public void EnemyMove()
     {
         Debug.Log("Move");
-        if (meepScr.transform.position.x > enemy1Scr.transform.position.x)
+        if (meepScr.transform.position.x > enemy1Scr.transform.position.x) //If the user is to the right of the enemy
         {
-
-            StartCoroutine(Wait());
-            enemy1Scr.MovingEnemyR();
+            StartCoroutine(Wait()); 
+            enemy1Scr.MovingEnemyR(); //move right towards the user
         }
         else
         {
             StartCoroutine(Wait());
             enemy1Scr.MovingEnemyL();
         }
-        meepScr.swordActive = true;
-        meepScr.timeBtwMove = 0;
-        lastMove = "Move";
-        meepScr.swordActive = false;
-        StartCoroutine(Wait());
+        StartCoroutine(AllowMeep()); 
     }
 
     public void Dodge()
@@ -87,11 +82,8 @@ public class EnemyScr : MonoBehaviour
             enemy1Scr.MovingEnemyL();
             Debug.Log("Right");
         }
-        meepScr.swordActive = true;
-        meepScr.timeBtwMove = 0;
-        lastMove = "Dodge";
-        meepScr.swordActive = false;
-        StartCoroutine(Wait());
+
+        StartCoroutine(AllowMeep());
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -107,6 +99,15 @@ public class EnemyScr : MonoBehaviour
     }
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator AllowMeep() //allows the user to move 
+    {
+        yield return new WaitForSeconds(1);
+        meepScr.timeBtwMove = 0;
+        lastMove = "Dodge";
+        meepScr.swordActive = false;
+        yield return new WaitForSeconds(1);
     }
 }

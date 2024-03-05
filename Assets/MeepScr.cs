@@ -10,8 +10,6 @@ public class MeepScr : MonoBehaviour
     #pragma warning disable IDE0044
     private float Move = 93f;  //how far for the sprite to move
     public float timeBtwMove = 0;   // a timer that starts every time a move is made 
-
-
     public int atkTimer = 0;
 
     public GameObject enemyObj;
@@ -40,7 +38,7 @@ public class MeepScr : MonoBehaviour
         collider1Scr = collideObj.GetComponent<Collider1Scr>(); //gets the script from object
         enemyScr = enemyObj.GetComponent<EnemyScr>();
         enemy1Scr = enemy1Obj.GetComponent<Enemy1Scr>();
-        transform.position = new Vector2(0, 0.75f); //sets position of user
+        transform.position = new Vector2(0, 0.75f); //sets initial position
     }
 
     private void Start()
@@ -52,7 +50,7 @@ public class MeepScr : MonoBehaviour
     {
         if ((timeBtwMove == 0) && (stopR == false)) //if timer is done + no stop flag
         {
-            MovingCharR();  //calls function
+            MovingCharR();  //calls function to move right
         }
         if ((timeBtwMove == 0) && (stopL == false))
         {
@@ -73,7 +71,7 @@ public class MeepScr : MonoBehaviour
             {
                 stopR = true;
             }
-        CheckEnemyLocation();
+        CheckEnemyLocation(); 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -82,7 +80,7 @@ public class MeepScr : MonoBehaviour
         stopR = false;
     }
 
-    public void CheckEnemyLocation()
+    public void CheckEnemyLocation() //checks enemy location
     {
         if ((transform.position.x > enemy1Scr.transform.position.x) && (stopR = true))
         {
@@ -117,7 +115,6 @@ public class MeepScr : MonoBehaviour
             right = false;
             stopR = false;
             StartCoroutine(EnemyTurn());
-
         }
     }
 
@@ -157,12 +154,14 @@ public class MeepScr : MonoBehaviour
         {
             enemyScr.EnemyMove(); //else it will attempt to move towards the user
             Debug.Log(enemyScr.lastMove);
+            StartCoroutine(Wait());
         }
 
     }
 
-    public void MoveIT()
+    IEnumerator Wait()
     {
-        transform.position = new Vector2(transform.position.x + 1 * Time.fixedDeltaTime, transform.position.y); //changes position
+        yield return new WaitForSeconds(1);
     }
+
 }
