@@ -20,7 +20,7 @@ public class GameInitialisation : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0)) 
+        if (Input.GetKey(KeyCode.Mouse0)) //keybind disappears when screen is clicked
         {
             canvasUI.SetActive(true);
             keybinds.SetActive(false);
@@ -31,4 +31,6 @@ public class GameInitialisation : MonoBehaviour
     {
         SceneManager.LoadScene(MainMenuScene);
     } 
+
+
 }

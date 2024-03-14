@@ -7,20 +7,21 @@ public class SwordScr : MonoBehaviour
     public GameObject sword;
     public GameObject meep;
     private MeepScr meepScr;
+    public GameObject enemy;
+    public EnemyScr enemyScr;
 
     // Start is called before the first frame update
     void Start()
     {
-        sword.SetActive(false);
+        sword.SetActive(false); //sword only appears when used
         meepScr = meep.GetComponent<MeepScr>();
+        enemyScr = enemy.GetComponent<EnemyScr>();
     }
 
     public void SwordAtk()
     {
-        Debug.Log("A");
         sword.SetActive(true);
-        Debug.Log("B");
-        transform.position = new Vector2(meepScr.transform.position.x - 0.71f, meepScr.transform.position.y);
+        transform.position = new Vector2(meepScr.transform.position.x - 0.71f, meepScr.transform.position.y); //shifts sword to where the enemy is
         Debug.Log("swordFunc");
         if (sword != null )
         {
@@ -31,13 +32,11 @@ public class SwordScr : MonoBehaviour
 
     IEnumerator MoveSword()
     { 
-        yield return new WaitForSeconds(1);
-        Debug.Log("In sword function");
-        
+        yield return new WaitForSeconds(1); //moves sword to attack before disappearing
         transform.position = new Vector2(transform.position.x - 0.50f, transform.position.y);
+        enemyScr.TakeDmg(2);
         yield return new WaitForSeconds(0.5f);
         transform.position = new Vector2(transform.position.x + 0.50f, transform.position.y);
-        Debug.Log("End of sword function");
         yield return new WaitForSeconds(0.5f);
         sword.SetActive(false);
 

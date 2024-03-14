@@ -16,13 +16,20 @@ public class EnemyScr : MonoBehaviour
     public int RandomNum;
     public GameObject enemySword;
     public Sword1Scr sword1Scr;
+    public int damage;
+    public float wait;
 
+    public GameObject[] Hp;
 
     public void Awake()
     {
         meepScr = Meep.GetComponent<MeepScr>();
         enemy1Scr = Enemy1.GetComponent<Enemy1Scr>();
         sword1Scr = enemySword.GetComponent<Sword1Scr>();
+        for (int i = 0; i < Hp.Length-1; i++)
+        {
+            Hp[i].gameObject.SetActive(false);
+        }
     }
 
     public void Start()
@@ -30,10 +37,12 @@ public class EnemyScr : MonoBehaviour
         RandomNum = Random.Range(0, 3);
         Debug.Log("num generates" + RandomNum);
     }
-    public void takeDmg(int dmg)
+    public void TakeDmg(int dmg)
     {
+        damage = dmg;
         Enhealth -= dmg;
-        Debug.Log("damage TAKEN");
+        Debug.Log("damage TAKEN.Health: " + Enhealth);
+        StartCoroutine(Health());
         if (Enhealth == 0)
         {
             StartCoroutine(Win());
@@ -42,16 +51,19 @@ public class EnemyScr : MonoBehaviour
 
     public void EnemyAtk()
     {
-        meepScr.timeBtwMove = 0; //allows user to move 
-        lastMove = "Attack";
-        meepScr.swordActive = false;
-        StartCoroutine(Wait()); 
-        sword1Scr.SwordAtk();
-        meepScr.dodge = true; //will dodge in the next turn
+        wait = 2;
+        if (enemySword != null)
+        {
+            StartCoroutine(Wait());
+            sword1Scr.SwordAtk();
+            meepScr.dodge = true; //will dodge in the next turn
+        }
+        StartCoroutine (AllowMeep());
     }
 
     public void EnemyMove()
     {
+        wait = 0.5f;
         Debug.Log("Move");
         if (meepScr.transform.position.x > enemy1Scr.transform.position.x) //If the user is to the right of the enemy
         {
@@ -68,6 +80,7 @@ public class EnemyScr : MonoBehaviour
 
     public void Dodge()
     {
+        wait = 0.5f;
         Debug.Log("Dodge");
         if (meepScr.transform.position.x > enemy1Scr.transform.position.x)
         {
@@ -104,10 +117,16 @@ public class EnemyScr : MonoBehaviour
 
     IEnumerator AllowMeep() //allows the user to move 
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(wait);
         meepScr.timeBtwMove = 0;
-        lastMove = "Dodge";
         meepScr.swordActive = false;
         yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator Health()
+    {
+        Hp[Enhealth + damage-1].SetActive(false);
+        Hp[Enhealth-1].SetActive(true);
+        yield return Enhealth;
     }
 }

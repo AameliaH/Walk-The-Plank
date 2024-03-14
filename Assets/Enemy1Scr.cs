@@ -38,6 +38,6 @@ public class Enemy1Scr : EnemyScr
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
     }
 }

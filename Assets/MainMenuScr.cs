@@ -12,12 +12,12 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        mainScreenPanel.SetActive(true);    //when the game starts, main screen shows
+        mainScreenPanel.SetActive(true); //when the game starts, main screen shows
         questPanel.SetActive(false);  //other panels will be set to false so that they are hidden
         
     }
 
-    public void OnPlayButton()  //will change to a different scene of that name under variable (GameScene)
+    public void OnPlayButton()  //will change to a different scene of that name 
     {
         SceneManager.LoadScene("Game Screen");
     }
