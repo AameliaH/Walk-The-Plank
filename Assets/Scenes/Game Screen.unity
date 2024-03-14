@@ -319,9 +319,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1369166654}
-        m_TargetAssemblyTypeName: MeepScr, Assembly-CSharp
-        m_MethodName: BowAtk
+      - m_Target: {fileID: 953448280}
+        m_TargetAssemblyTypeName: Collider2Scr, Assembly-CSharp
+        m_MethodName: Bow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -331,9 +331,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 953448280}
-        m_TargetAssemblyTypeName: Collider2Scr, Assembly-CSharp
-        m_MethodName: Bow
+      - m_Target: {fileID: 1369166654}
+        m_TargetAssemblyTypeName: MeepScr, Assembly-CSharp
+        m_MethodName: BowAtk
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1161,9 +1161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bow: {fileID: 799457880}
-  enemy: {fileID: 534064424}
+  enemy: {fileID: 1725410677}
   meep: {fileID: 1369166651}
-  enemy1Scr: {fileID: 534064426}
+  enemyScr: {fileID: 1725410679}
   meepScr: {fileID: 1369166654}
 --- !u!212 &799457882
 SpriteRenderer:
@@ -1242,6 +1242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 800177059}
   - component: {fileID: 800177058}
+  - component: {fileID: 800177060}
   m_Layer: 0
   m_Name: bowEnemy
   m_TagString: Untagged
@@ -1316,6 +1317,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &800177060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800177057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf37d6176fc24941816ecc4d9bb4ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bow: {fileID: 800177057}
+  enemy: {fileID: 1725410677}
+  meep: {fileID: 1369166651}
+  enemyScr: {fileID: 1725410679}
+  meepScr: {fileID: 1369166654}
 --- !u!1001 &826501297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1413,12 +1431,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953448277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1369166653}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &953448279
 BoxCollider2D:
@@ -1478,6 +1496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inRange: 0
+  temp: 0
   collider2: {fileID: 953448277}
 --- !u!1 &1049134117
 GameObject:
@@ -2157,7 +2176,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2114736867}
-  - {fileID: 953448278}
   - {fileID: 1887196339}
   - {fileID: 866407604}
   - {fileID: 258971483}
@@ -2192,10 +2210,12 @@ MonoBehaviour:
   - {fileID: 258971482}
   - {fileID: 866407603}
   - {fileID: 1887196337}
+  bowObj: {fileID: 799457880}
   collider1Scr: {fileID: 2114736868}
   swordScr: {fileID: 1624955949}
   enemy1Scr: {fileID: 534064426}
   collider2Scr: {fileID: 953448280}
+  bowScr: {fileID: 799457881}
   swordPos: {x: 0, y: 0}
   collider1: {fileID: 2114736865}
   collider2: {fileID: 953448279}
@@ -2206,7 +2226,8 @@ MonoBehaviour:
   swordActive: 0
   EnemyMovement: 0
   dodge: 0
-  bowRange: 0
+  bowActive: 0
+  StopCollide: 0
 --- !u!50 &1369166656
 Rigidbody2D:
   serializedVersion: 4
@@ -3308,7 +3329,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.92, y: 0.76}
+  m_Size: {x: 0.75, y: 0.76}
   m_EdgeRadius: 0
 --- !u!4 &2114736867
 Transform:
@@ -3468,3 +3489,4 @@ SceneRoots:
   - {fileID: 798174161}
   - {fileID: 799457883}
   - {fileID: 800177059}
+  - {fileID: 953448278}

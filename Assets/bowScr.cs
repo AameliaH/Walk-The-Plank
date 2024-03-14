@@ -19,7 +19,15 @@ public class BowScr : MonoBehaviour
     public void BowAtk()
     {
         bow.SetActive(true);
-        transform.position = new Vector2 (meepScr.transform.position.x + 0.6f, meepScr.transform.position.y + 0.1f);
-        enemyScr.TakeDmg(2);
+        transform.position = new Vector2 (meepScr.transform.position.x - 0.7f, meepScr.transform.position.y - 0.25f);
+        StartCoroutine(Bow());
+    }
+
+    IEnumerator Bow()
+    {
+        yield return new WaitForSeconds(0.5f);
+        enemyScr.TakeDmg(1);
+        yield return new WaitForSeconds(1);
+        bow.SetActive(false);
     }
 }

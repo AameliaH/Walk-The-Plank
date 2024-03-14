@@ -43,10 +43,12 @@ public class EnemyScr : MonoBehaviour
         Enhealth -= dmg;
         Debug.Log("damage TAKEN.Health: " + Enhealth);
         StartCoroutine(Health());
-        if (Enhealth == 0)
+        if (Enhealth <= 0)
         {
+            Debug.Log("DEAD");
             StartCoroutine(Win());
         }
+
     }
 
     public void EnemyAtk()
@@ -101,9 +103,21 @@ public class EnemyScr : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        meepScr.stopL = true;
-        meepScr.stopR = true;
+        Debug.Log("SJDK");
+        if (collision.GameObject().layer == 7)
+        {
+            Debug.Log("WOOOO");
+            meepScr.stopL = true;
+            meepScr.stopR = true;
+        }
 
+
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        Debug.Log("SJDK");
+        meepScr.stopL = false;
+        meepScr.stopR = false;
     }
     IEnumerator Win()
     {
@@ -125,7 +139,11 @@ public class EnemyScr : MonoBehaviour
 
     IEnumerator Health()
     {
-        Hp[Enhealth + damage-1].SetActive(false);
+        Debug.Log(Enhealth);
+
+        damage = damage - 1;
+        Debug.Log(damage);
+        Hp[Enhealth + damage].SetActive(false);
         Hp[Enhealth-1].SetActive(true);
         yield return Enhealth;
     }

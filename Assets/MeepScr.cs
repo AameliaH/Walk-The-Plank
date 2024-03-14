@@ -41,6 +41,7 @@ public class MeepScr : MonoBehaviour
     public bool EnemyMovement;
     public bool dodge = false;
     public bool bowActive = false;
+    public bool StopCollide;
 
     private void Awake()
     {
@@ -87,6 +88,10 @@ public class MeepScr : MonoBehaviour
             {
                 stopR = true;
             }
+        else if (collision.gameObject.layer == 8)
+        {
+            StopCollide = true;
+        }
         CheckEnemyLocation(); 
     }
 
@@ -98,12 +103,12 @@ public class MeepScr : MonoBehaviour
 
     public void CheckEnemyLocation() //checks enemy location 
     {
-        if ((transform.position.x > enemy1Scr.transform.position.x) && (stopR = true))
+        if ((transform.position.x > enemy1Scr.transform.position.x) && (stopR == true))
         {
             stopR = false;
         }
 
-        if ((transform.position.x < enemy1Scr.transform.position.x) && (stopL = true))
+        if ((transform.position.x < enemy1Scr.transform.position.x) && (stopL == true))
         {
             stopL = false;
         }
