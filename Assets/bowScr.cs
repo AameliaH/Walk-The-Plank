@@ -18,16 +18,25 @@ public class BowScr : MonoBehaviour
 
     public void BowAtk()
     {
-        bow.SetActive(true);
+        bow.SetActive(true); //bow appears
         transform.position = new Vector2 (meepScr.transform.position.x - 0.7f, meepScr.transform.position.y - 0.25f);
         StartCoroutine(Bow());
     }
 
     IEnumerator Bow()
     {
-        yield return new WaitForSeconds(0.5f);
-        enemyScr.TakeDmg(1);
-        yield return new WaitForSeconds(1);
-        bow.SetActive(false);
+        float randValue = Random.value;
+        if (randValue < 0.40)
+        {
+            yield return new WaitForSeconds(1);
+            bow.SetActive(false); //bow disappears
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+            enemyScr.TakeDmg(1); //enemy takes damage
+            yield return new WaitForSeconds(1);
+            bow.SetActive(false); //bow disappears
+        }
     }
 }

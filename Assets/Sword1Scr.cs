@@ -32,16 +32,28 @@ public class Sword1Scr : MonoBehaviour
 
     IEnumerator MoveSword()
     {
-        yield return new WaitForSeconds(1);
-        Debug.Log("In sword function");
 
-        transform.position = new Vector2(transform.position.x + 0.50f, transform.position.y);
-        meepScr.TakeDmg(2);
-        yield return new WaitForSeconds(0.5f);
-        transform.position = new Vector2(transform.position.x - 0.50f, transform.position.y);
-        Debug.Log("End of sword function");
-        yield return new WaitForSeconds(0.5f);
-        swordEnemy.SetActive(false);
+        float randValue = Random.value;
+        if (randValue < 0.20)
+        {
+            yield return new WaitForSeconds(1); //moves sword to attack before disappearing
+            transform.position = new Vector2(transform.position.x + 0.50f, transform.position.y);
+            meepScr.TakeDmg(3);
+            yield return new WaitForSeconds(0.5f);
+            transform.position = new Vector2(transform.position.x - 0.50f, transform.position.y);
+            yield return new WaitForSeconds(0.5f);
+            swordEnemy.SetActive(false);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1); //moves sword to attack before disappearing
+            transform.position = new Vector2(transform.position.x + 0.50f, transform.position.y);
+            meepScr.TakeDmg(2);
+            yield return new WaitForSeconds(0.5f);
+            transform.position = new Vector2(transform.position.x - 0.50f, transform.position.y);
+            yield return new WaitForSeconds(0.5f);
+            swordEnemy.SetActive(false);
+        }
     }
 
 }

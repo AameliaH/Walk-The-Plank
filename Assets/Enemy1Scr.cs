@@ -7,6 +7,7 @@ public class Enemy1Scr : EnemyScr
 {
 #pragma warning disable IDE0044
     private float MoveNum = 93f;  //how far for the sprite to move
+    public GameObject collider3;
 
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class Enemy1Scr : EnemyScr
         StartCoroutine(Wait());
         Debug.Log(transform.position.x);
         transform.position = new Vector2(transform.position.x + MoveNum * Time.fixedDeltaTime, transform.position.y); //changes position
+        collider3.transform.position = transform.position;
         Debug.Log(transform.position.x);
         Debug.Log("Right");
     }
@@ -30,6 +32,7 @@ public class Enemy1Scr : EnemyScr
         StartCoroutine(Wait());
         Debug.Log(transform.position.x);
         transform.position = new Vector3(transform.position.x - MoveNum * Time.fixedDeltaTime, transform.position.y);
+        collider3.transform.position = transform.position;
         Debug.Log(transform.position.x);
         Debug.Log("Left");
     }
