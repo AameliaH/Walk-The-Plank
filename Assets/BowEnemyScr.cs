@@ -30,6 +30,7 @@ public class BowEnemyScr : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
             bow.SetActive(false); //bow disappears
+            Debug.Log("low bow damage");
         }
         else
         {

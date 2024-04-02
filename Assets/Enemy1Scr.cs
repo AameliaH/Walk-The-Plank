@@ -8,6 +8,7 @@ public class Enemy1Scr : EnemyScr
 #pragma warning disable IDE0044
     private float MoveNum = 93f;  //how far for the sprite to move
     public GameObject collider3;
+    public GameObject collider2;
 
 
     // Update is called once per frame
@@ -37,7 +38,11 @@ public class Enemy1Scr : EnemyScr
         Debug.Log("Left");
     }
 
-
+    public void Wind()
+    {
+        meepScr.transform.position = new Vector2(transform.position.x + 5.58f, meepScr.transform.position.y); //shifts the enemy
+        collider2.transform.position = meepScr.transform.position;
+    }
 
     IEnumerator Wait()
     {

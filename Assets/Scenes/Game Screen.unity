@@ -876,8 +876,12 @@ MonoBehaviour:
   enemyBow: {fileID: 800177057}
   bowEnemyScr: {fileID: 800177060}
   deaths: 0
+  collider3: {fileID: 975636919}
+  collider3Scr: {fileID: 975636922}
+  WindUse: 0
   Hp: []
   collider3: {fileID: 975636919}
+  collider2: {fileID: 953448277}
 --- !u!212 &534064427
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2432,6 +2436,7 @@ MonoBehaviour:
   damage: 0
   swordUse: 0
   bowUse: 0
+  windUse: 0
   turns: 0
   enemyObj: {fileID: 1725410677}
   collideObj: {fileID: 2114736864}
@@ -2468,6 +2473,7 @@ MonoBehaviour:
   StopCollide: 0
   border: 0
   windActive: 0
+  EnemyPush: 0
 --- !u!50 &1369166656
 Rigidbody2D:
   serializedVersion: 4
@@ -2900,6 +2906,9 @@ MonoBehaviour:
   enemyBow: {fileID: 800177057}
   bowEnemyScr: {fileID: 800177060}
   deaths: 0
+  collider3: {fileID: 975636920}
+  collider3Scr: {fileID: 975636922}
+  WindUse: 0
   Hp:
   - {fileID: 59839178}
   - {fileID: 782387887}

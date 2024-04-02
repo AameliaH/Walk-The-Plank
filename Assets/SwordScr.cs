@@ -43,6 +43,7 @@ public class SwordScr : MonoBehaviour
             transform.position = new Vector2(transform.position.x + 0.50f, transform.position.y);
             yield return new WaitForSeconds(0.5f);
             sword.SetActive(false);
+            Debug.Log("high damage sword");
         }
         else
         {

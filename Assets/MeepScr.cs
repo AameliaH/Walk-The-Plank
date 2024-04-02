@@ -54,6 +54,9 @@ public class MeepScr : MonoBehaviour
     public bool StopCollide;
     public bool border = false;
     public bool windActive;
+    public bool EnemyPush = false;
+    public bool bowFail = false;
+    public bool test = false;
 
     private void Awake()
     {
@@ -192,12 +195,30 @@ public class MeepScr : MonoBehaviour
 
     public void WindAtk()
     {
-        Debug.Log("Wind called");
-        enemy1Scr.transform.position = new Vector2(transform.position.x - 7.44f, enemy1Scr.transform.position.y); //shifts the enemy
+        if (timeBtwMove == 0)
+        {
+            enemy1Scr.transform.position = new Vector2(transform.position.x - 5.58f, enemy1Scr.transform.position.y); //shifts the enemy
+            collide3Obj.transform.position = enemy1Scr.transform.position;
+            float randValue = Random.value;
+            if (randValue < 0.25)
+            {
+                timeBtwMove = 0;
+                windUse += 1;
+                Debug.Log("skipped enemy turn");
+            }
+            else
+            {
+                StartCoroutine(EnemyTurn());
+                timeBtwMove = 1;
+            }
+            turns += 1;
+        }
+
+    }
+
+    public void EnemyTurnCall()
+    {
         StartCoroutine (EnemyTurn());
-        timeBtwMove = 1;
-        turns += 1;
-        windUse += 1;
     }
 
     IEnumerator Border()
@@ -215,34 +236,89 @@ public class MeepScr : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
-        yield return new WaitForSeconds(2);
-
-
-
-
-
-
-
         yield return new WaitForSeconds(2); //waits 2 seconds
-        if (((collider1Scr.inRange == true) && (swordActive==true)) || (dodge == true))
+        if ((bowFail == true) || (enemyScr.WindUse == true))
         {
-            enemyScr.Dodge();   //if enemy has been attacked then it will move away
-            Debug.Log(enemyScr.lastMove);
-            swordActive = false;
-            dodge = false;
+            Debug.Log("8");
+            enemyScr.EnemyBow();
+            bowFail = false;
+            enemyScr.WindUse = false;
         }
-        else if (collider1Scr.inRange == true)
+        else if (enemy1Scr.transform.position.x <= transform.position.x - 5.58f) //3 tiles away
         {
-            enemyScr.EnemySword();  //if in range enemy can attack user
-            Debug.Log(enemyScr.lastMove);
+            if (enemyScr.Enhealth > 2)
+            {
+                enemyScr.EnemyMove();
+                StartCoroutine(Wait());
+                Debug.Log("1");
+            }
+            else if ((enemyScr.Enhealth < 2) && (collider3Scr.inRange == true)) //in wind/bow range
+            {
+                if (health < 2)
+                {
+                    enemyScr.EnemyBow();
+                }
+                else
+                {
+                    enemyScr.EnemyWind();
+                    Debug.Log("2");
+                }
+            }
+            else if (collider3Scr.inRange == true)
+            {
+                enemyScr.EnemyBow();
+                Debug.Log("3");
+            }
+            else
+            {
+                enemyScr.EnemyMove();
+                Debug.Log("4");
+            }
+        }
+
+
+        else if (collider1Scr.inRange == true) //sword range
+        {
+            if (EnemyPush == true)
+            {
+                if (health < 3)
+                {
+                    enemyScr.EnemySword();
+                }
+                else
+                {
+                    enemyScr.EnemyWind();
+                    EnemyPush = false;
+                }
+                Debug.Log("5");
+            }
+            else
+            {
+                enemyScr.EnemySword();
+                swordActive = false;
+                EnemyPush = true;   //if enemy attacked then it will try to push the user away
+                Debug.Log("6");
+            }
+        }
+        else if (enemy1Scr.transform.position.x > transform.position.x - 5.58f) //closer than 3 tiles from user
+        {
+            if (enemy1Scr.transform.position.x <= transform.position.x - 1.86f) //2 tiles away
+            {
+                enemyScr.EnemyBow();
+                Debug.Log("7");
+            }
+            else
+            {
+                enemyScr.EnemyMove();
+            }
+
         }
         else
         {
-            enemyScr.EnemyMove(); //else it will attempt to move towards the user
-            Debug.Log(enemyScr.lastMove);
-            StartCoroutine(Wait());
+            enemyScr.EnemyMove();
+            Debug.Log("11");
         }
-        enemyScr.EnemyBow();
+
 
     }
 

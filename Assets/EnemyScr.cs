@@ -22,6 +22,7 @@ public class EnemyScr : MonoBehaviour
     public int deaths = 0;
     public Collider2D collider3;
     public Collider3Scr collider3Scr;
+    public bool WindUse = false;
 
     public GameObject[] Hp;
 
@@ -80,7 +81,18 @@ public class EnemyScr : MonoBehaviour
     public void EnemyWind()
     {
         Debug.Log("Wind called");
-        meepScr.transform.position = new Vector2(transform.position.x + 7.44f, meepScr.transform.position.y); //shifts the enemy
+        float randValue = Random.value;
+        if (randValue < 0.25)
+        {
+            WindUse = true;
+            meepScr.EnemyTurnCall();
+            Debug.Log("skipped user turn");
+        }
+        else
+        {
+            enemy1Scr.Wind();
+            StartCoroutine(AllowMeep());
+        }
     }
 
     public void EnemyMove()

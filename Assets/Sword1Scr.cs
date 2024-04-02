@@ -32,7 +32,6 @@ public class Sword1Scr : MonoBehaviour
 
     IEnumerator MoveSword()
     {
-
         float randValue = Random.value;
         if (randValue < 0.20)
         {
@@ -43,6 +42,7 @@ public class Sword1Scr : MonoBehaviour
             transform.position = new Vector2(transform.position.x - 0.50f, transform.position.y);
             yield return new WaitForSeconds(0.5f);
             swordEnemy.SetActive(false);
+            Debug.Log("high damage sword");
         }
         else
         {

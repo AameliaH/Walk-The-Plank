@@ -30,6 +30,8 @@ public class BowScr : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
             bow.SetActive(false); //bow disappears
+            Debug.Log("low bow damage");
+            meepScr.bowFail = true;
         }
         else
         {
